@@ -14,8 +14,6 @@ function fixfilename (oldstr,newstr,folderpath,filename)
 % specificated, the function will only change the unrecognizable
 % characters. 
 
-clear list
-
 %% valiables
 
 if exist('folderpath','var')==1
@@ -24,20 +22,14 @@ if exist('folderpath','var')==1
 end
 
 if exist('filename','var')==1
-    [~,b]=dirff(filename);
+    [~,list]=dirff(0,pwd,filename);
 else
-    [~,b]=dirff;
+    [~,list]=dirff;
 end
 
-%% fixing variables
-% transforme the struct b in cells
-
-for i=1:size(b,2)
-    list{i}=b(i).name;
-end
 %% changing characters
 
-fullfile=list;
+fullfile=list';
 
 if exist('oldstr','var')==1 && exist('newstr','var')==1
     fullfile=strchange(fullfile,newstr,oldstr);
@@ -75,7 +67,7 @@ end
 
 %% Rewriting filename
 
-for i=1:size(b,2)
+for i=1:size(list,1)
     if isequal(list{i},fullfile{i})==0
         movefile(list{i},fullfile{i})
     end
