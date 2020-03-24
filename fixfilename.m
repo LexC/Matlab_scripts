@@ -1,12 +1,13 @@
-function fixfilename (oldstr,newstr,folderpath,filename)
-% fixfilename (oldstr,newstr,folderpath,filename)
+function fixfilename (folderpath,oldstr,newstr,name)
+% fixname (oldstr,newstr,folderpath,name)
 %
 % this function changes unrecognizable characters of files names into
-% recognizable ones and a specific string (oldstr) into a new one (newstr).
+% recognizable ones and\or a specific string (oldstr) into a new one
+% (newstr).
 % 
-% filename = Part or full name of the target file or files
+% name = Part or full name of the target file or files
 % folderpath = the path of the folder that contains the wanted files
-% oldstr = The string that you want to change in the filename
+% oldstr = The string that you want to change in the name
 % newstr = The new string
 %
 % If the variable folderpath is not specificated, the function will act on
@@ -21,8 +22,8 @@ if exist('folderpath','var')==1
     cd (folderpath)
 end
 
-if exist('filename','var')==1
-    [~,list]=dirff(0,pwd,filename);
+if exist('name','var')==1
+    [~,list]=dirff(0,pwd,name);
 else
     [~,list]=dirff;
 end
@@ -65,7 +66,7 @@ for i=1:size(oldchar,1)
 end
 
 
-%% Rewriting filename
+%% Rewriting name
 
 for i=1:size(list,1)
     if isequal(list{i},fullfile{i})==0

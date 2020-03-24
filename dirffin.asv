@@ -44,6 +44,7 @@ folders_in_check=size(strsplit(folders{1},'\'),2);
 
 u=1;
 while folders_in_check < pathsize
+    infloop_check=0;
     for i=u:size(folders,1)
         %%
         cd(folders{i})
@@ -62,12 +63,11 @@ while folders_in_check < pathsize
         if isequal(files1,{'None'})==0
             files=[files;files1];
         end
+        infloop_check=infloop_check+1;
     end
+    if 
     folders_in_check=size(strsplit(folders{end},'\'),2);
     u=i+1;
-	if size(i,1)==0
-        break;
-    end
 end
 %% Foot
 
