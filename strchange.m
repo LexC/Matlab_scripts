@@ -6,7 +6,7 @@ function fullfile=strchange (list,newchar,oldchar)
 %
 % list -> it is cell with size=(1,x)
 % newchar -> the new character
-% newchar -> the old character, if this variable is not declere the function
+% oldchar -> the old character, if this variable is not declere the function
 % will act on the space character.
 %
 
