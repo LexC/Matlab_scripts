@@ -1,61 +1,93 @@
-function [ folders,files] = dirff (name)
-% Retorna os nomes dos aquivos e pastas do local.
+function [ folders,files] = dirff (fullpathflag,PATH_IN,name)
+%
+% [ folders,files] = dirff (fullpathflag,PATH_IN,name)
 % 
-% [ folders,files] = dirff (name)
+%   Returns all the names of folders and files of one folder.
+%
+%   Explaning variables
 % 
-% Se não houver arquivos
-%	files=files(1).name='None'
-% Se não houver pastas
-%	folders=folders(1).name='None'
+% folders: a cell type with the names of the folders.
+%     If there is no folders:
+%         folders=folders{1}='None'
+% files: is a cell type with the names of the files.
+%     If there is no files:
+%         files=files{1}='None'
+% 
+% fullpathflag: if equal 1, files and folders will return with the full path.
+% PATH_IN: to change the wanted location
+% name: lists files that match with it
 
-%% Variables
+%% Head
+
+% Changing folder
+if exist ('PATH_IN','var') == 1
+    PATH_OUT=pwd;
+    cd(PATH_IN)
+end
+
+% Variables
 
 A=dir;
-u=1;
-k=1;
+u=1;w=1;
 
-folders(1).name='None';
-files(1).name='None';
+folders{1}='None';
+files{1}='None';
 
-%% 
+% Excluding unwanted results
+for i=1:2
+    if isequal(A(1).name,'.')==1 || isequal(A(1).name,'..')==1
+        A(1)=[];
+    end
+end
+
+% If there are no content, stops the script
+if size(A,2)==0
+    return
+end
+%% Body
 
 if exist ('name','var') == 0 
-
-        for i=1:size(A,1)
-            if isequal (A(i).name,'.') ~=1 && isequal (A(i).name,'..') ~=1
-                check=exist (A(i).name);
-                if check == 7
-                    folders(u).name=A(i).name;
-                    u=u+1;
-                elseif check == 2 || check == 6
-                    files(k).name=A(i).name;
-                    k=k+1;
-                end
-            end
-        end
-
-%% 
-else
-    %% FOLDERS
-    
+%% Results without the variable 'name'
     for i=1:size(A,1)
-
-        if isequal (A(i).name,'.') ~=1 && isequal (A(i).name,'..') ~=1
-            if exist (A(i).name,'dir') == 7
-                folders(u).name=A(i).name;
-                u=u+1;
-            end
+        if exist(A(i).name,'dir')==7
+            folders{u,1}=A(i).name;
+            u=u+1;
+        else
+            files{w,1}=A(i).name;
+            w=w+1;
         end
-
     end
-
-    %% FILES
-
+else
+%% Results with the variable 'name'
+    for i=1:size(A,1)
+        if exist(A(i).name,'dir')==7
+            folders{u,1}=A(i).name;
+            u=u+1;
+        end
+    end
 	B=dir(name);
-
     for i=1:size(B,1)
-        files(k).name=B(i).name;
-        k=k+1;
+        files{w,1}=B(i).name;
+        w=w+1;
     end
-    
+end
+%%  Foot
+
+% Adding path to the variables
+if exist ('fullpathflag','var') == 1 && fullpathflag==1 && u~=1
+    for i=1:size(folders,1)
+        folders{i}=fullfile(pwd,folders{i});
+    end
+end
+if exist ('fullpathflag','var') == 1 && fullpathflag==1 && w~=1
+    for i=1:size(files,1)
+        files{i}=fullfile(pwd,files{i});
+    end
+end
+
+% changing the folders back to the original location
+if exist ('PATH_IN','var') == 1
+	cd(PATH_OUT)
+end
+
 end
