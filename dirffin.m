@@ -65,6 +65,7 @@ while folders_in_check < pathsize
             break
         end
     end
+    %%
     folders_in_check=size(strsplit(folders{end},'\'),2);
     u=i+1;
     %%
