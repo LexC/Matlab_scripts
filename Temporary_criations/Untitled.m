@@ -2,7 +2,7 @@ close all
 clear
 clc
 tic
-% Load and Variables
+%% Load and Variables
 
 load D:\GD_UNICAMP\IC_NeuroFisica\Projetos\Coleta_NIRS_fMRI_2015-2017\Processed_data\fMRI\CorrMat_graphs.mat
 

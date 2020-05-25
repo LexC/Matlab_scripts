@@ -1,6 +1,6 @@
-function [ folders,files] = dirff (fullpathflag,PATH_IN,name)
+function [ folders,files] = dirff (foldersin,PATH_IN,name)
 %
-% [ folders,files] = dirff (fullpathflag,PATH_IN,name)
+% [ folders,files] = dirff (foldersin,PATH_IN,name)
 % 
 %   Returns all the names of folders and files of one folder.
 %
@@ -13,7 +13,7 @@ function [ folders,files] = dirff (fullpathflag,PATH_IN,name)
 %     If there is no files:
 %         files=files{1}='None'
 % 
-% fullpathflag: if equal 1, files and folders will return with the full path.
+% foldersin: if equal 1, files and folders will return with the full path.
 % PATH_IN: to change the wanted location
 % name: lists files that match with it
 
@@ -74,12 +74,12 @@ end
 %%  Foot
 
 % Adding path to the variables
-if exist ('fullpathflag','var') == 1 && fullpathflag==1 && u~=1
+if exist ('foldersin','var') == 1 && foldersin==1 && u~=1
     for i=1:size(folders,1)
         folders{i}=fullfile(pwd,folders{i});
     end
 end
-if exist ('fullpathflag','var') == 1 && fullpathflag==1 && w~=1
+if exist ('foldersin','var') == 1 && foldersin==1 && w~=1
     for i=1:size(files,1)
         files{i}=fullfile(pwd,files{i});
     end
